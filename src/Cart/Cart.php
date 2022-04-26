@@ -59,6 +59,15 @@ class Cart
         return $this;
     }
 
+    public function setTax(Product $product, float $tax): Cart
+    {
+        $item = $this->findByProduct($product);
+
+        $item->setTax($tax);
+
+        return $this;
+    }
+
     public function getItem(int $index): Item
     {
         if (!isset($this->items[$index])) {
@@ -79,6 +88,17 @@ class Cart
 
         foreach ($this->items as $item) {
             $totalPrice += $item->getTotalPrice();
+        }
+
+        return $totalPrice;
+    }
+
+    public function getTotalPriceGross(): int
+    {
+        $totalPrice = 0;
+
+        foreach ($this->items as $item) {
+            $totalPrice += $item->getTotalPriceGross();
         }
 
         return $totalPrice;

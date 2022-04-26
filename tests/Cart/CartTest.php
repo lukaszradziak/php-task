@@ -14,6 +14,24 @@ class CartTest extends TestCase
     /**
      * @test
      */
+    public function itAddProductTax(): void
+    {
+        $product1 = $this->buildTestProduct(1, 10000);
+        $product2 = $this->buildTestProduct(2, 15000);
+
+        $cart = new Cart();
+        $cart->addProduct($product1, 1);
+        $cart->addProduct($product2, 2);
+
+        $cart->setTax($product1, 0.08);
+        $cart->setTax($product2, 0.23);
+
+        $this->assertEquals(10800 + 36900, $cart->getTotalPriceGross());
+    }
+
+    /**
+     * @test
+     */
     public function itAddsOneProduct(): void
     {
         $product = $this->buildTestProduct(1, 15000);
