@@ -9,9 +9,27 @@ class Cart
 {
     private $items = [];
 
+    public function findByProduct(Product $product): ?Item
+    {
+        foreach ($this->items as $item) {
+            if ($item->getProduct() === $product) {
+                return $item;
+            }
+        }
+
+        return null;
+    }
+
     public function addProduct(Product $product, int $quantity = 1): Cart
     {
-        $this->items[] = new Item($product, $quantity);
+        $item = $this->findByProduct($product);
+
+        if ($item) {
+            $item->setQuantity($item->getQuantity() + $quantity);
+        } else {
+            $item = new Item($product, $quantity);
+            $this->items[] = $item;
+        }
 
         return $this;
     }
@@ -29,13 +47,18 @@ class Cart
         return $this;
     }
 
-    public function setQuantity(Product $product, int $quantity)
+    public function setQuantity(Product $product, int $quantity): Cart
     {
-        foreach ($this->items as $item) {
-            if ($item->getProduct() === $product) {
-                $item->setQuantity($quantity);
-            }
+        $item = $this->findByProduct($product);
+
+        if ($item) {
+            $item->setQuantity($quantity);
+        } else {
+            $item = new Item($product, $quantity);
+            $this->items[] = $item;
         }
+
+        return $this;
     }
 
     public function getItem(int $index): Item
