@@ -27,8 +27,7 @@ class Cart
         if ($item) {
             $item->setQuantity($item->getQuantity() + $quantity);
         } else {
-            $item = new Item($product, $quantity);
-            $this->items[] = $item;
+            $this->items[] = new Item($product, $quantity);
         }
 
         return $this;
@@ -54,8 +53,7 @@ class Cart
         if ($item) {
             $item->setQuantity($quantity);
         } else {
-            $item = new Item($product, $quantity);
-            $this->items[] = $item;
+            $this->items[] = new Item($product, $quantity);
         }
 
         return $this;
