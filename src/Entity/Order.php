@@ -14,11 +14,38 @@ class Order
         $this->items = $items;
     }
 
+    public function getItemsData()
+    {
+        $items = [];
+
+        foreach ($this->items as $item) {
+            $items[] = [
+                'id' => $item->getProduct()->getId(),
+                'quantity' => $item->getQuantity(),
+                'total_price' => $item->getTotalPrice(),
+            ];
+        }
+
+        return $items;
+    }
+
+    private function getTotalPrice(): int
+    {
+        $totalPrice = 0;
+
+        foreach ($this->items as $item) {
+            $totalPrice += $item->getTotalPrice();
+        }
+
+        return $totalPrice;
+    }
+
     public function getDataForView(): array
     {
         return [
             'id' => $this->id,
-            'items' => $this->items
+            'items' => $this->getItemsData(),
+            'total_price' => $this->getTotalPrice()
         ];
     }
 }
