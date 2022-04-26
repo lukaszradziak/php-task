@@ -50,9 +50,9 @@ class Item
         $this->quantity = $quantity;
     }
 
-    public function getTax(): float
+    public function getTax(): string
     {
-        return $this->tax;
+        return $this->tax * 100 . '%';
     }
 
     public function setTax(float $tax): void
