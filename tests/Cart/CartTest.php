@@ -31,6 +31,20 @@ class CartTest extends TestCase
 
     /**
      * @test
+     * @dataProvider getNonExistentItemIndexes
+     * @expectedException \OutOfBoundsException
+     */
+    public function itThrowsExceptionForInvalidTax(int $index): void
+    {
+        $product = $this->buildTestProduct(1, 15000);
+
+        $cart = new Cart();
+        $cart->addProduct($product, 1);
+        $cart->getItem($index);
+    }
+
+    /**
+     * @test
      */
     public function itAddsOneProduct(): void
     {

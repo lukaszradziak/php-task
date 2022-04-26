@@ -2,6 +2,7 @@
 
 namespace Recruitment\Cart;
 
+use InvalidArgumentException;
 use Recruitment\Cart\Exception\QuantityTooLowException;
 use Recruitment\Entity\Product;
 
@@ -12,6 +13,8 @@ class Item
     private $quantity;
 
     private $tax = 0;
+
+    public const TAXES = [0, 0.05, 0.08, 0.23];
 
     public function __construct(Product $product, int $quantity)
     {
@@ -54,6 +57,10 @@ class Item
 
     public function setTax(float $tax): void
     {
+        if (in_array($tax, self::TAXES) === false) {
+            throw new InvalidArgumentException();
+        }
+
         $this->tax = $tax;
     }
 
