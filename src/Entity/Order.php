@@ -14,12 +14,12 @@ class Order
         $this->items = $items;
     }
 
-    public function getItemsData()
+    public function getItemsData(): array
     {
-        $items = [];
+        $itemsData = [];
 
         foreach ($this->items as $item) {
-            $items[] = [
+            $itemsData[] = [
                 'id' => $item->getProduct()->getId(),
                 'quantity' => $item->getQuantity(),
                 'total_price' => $item->getTotalPrice(),
@@ -27,7 +27,7 @@ class Order
             ];
         }
 
-        return $items;
+        return $itemsData;
     }
 
     private function getTotalPrice(): int

@@ -66,8 +66,6 @@ class Item
 
     public function getTotalPriceGross(): int
     {
-        $total = $this->quantity * $this->product->getUnitPrice();
-
-        return $total * (1 + $this->tax);
+        return $this->getTotalPrice() * (1 + $this->tax);
     }
 }
